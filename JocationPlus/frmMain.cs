@@ -30,7 +30,7 @@ namespace LocationCleaned
             CreateLocationDB();
             InitializeComponent();
             ReadLocationFromDB();
-            PrintMessage("https://github.com/quxiaozha/JocationPlus");
+            PrintMessage("https://github.com/DoubleO31/JocationPlus");
             PrintMessage("开源软件，请勿用作非法用途^_^");
         }
         private void frmMain_Load(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace LocationCleaned
         private void button1_Click(object sender, EventArgs e)
         {
             map.ShowDialog();
-            txtLocation.Text = $"{map.Location.Longitude}:{map.Location.Latitude}";
+            txtLocation.Text = $"{map.Location.Latitude}:{map.Location.Longitude}";
             txtLocation.Items.Clear();
             ReadLocationFromDB();
         }
@@ -140,13 +140,13 @@ namespace LocationCleaned
             string[] loc = locStr.Split(new char[] { ':' });
             if (loc.Length == 2)
             {
-                map.Location.Longitude = System.Convert.ToDouble(loc[0].Trim());
-                map.Location.Latitude = System.Convert.ToDouble(loc[1].Trim());
+                map.Location.Longitude = System.Convert.ToDouble(loc[1].Trim());
+                map.Location.Latitude = System.Convert.ToDouble(loc[0].Trim());
                 service.UpdateLocation(map.Location);
             }
             else
             {
-                PrintMessage($"位置格式为：经度:纬度 或 经度,纬度，请确认格式");
+                PrintMessage($"The correct GPS format is：Lat:Lon or Lat:Lon.");
             }
             
         }
@@ -329,8 +329,8 @@ namespace LocationCleaned
             string[] loc = locStr.Split(new char[] { ':' });
             if (loc.Length == 2)
             {
-                map.txtLocation.Longitude = System.Convert.ToDouble(loc[0].Trim());
-                map.txtLocation.Latitude = System.Convert.ToDouble(loc[1].Trim());
+                map.txtLocation.Longitude = System.Convert.ToDouble(loc[1].Trim());
+                map.txtLocation.Latitude = System.Convert.ToDouble(loc[0].Trim());
             }
         }
 
@@ -369,7 +369,7 @@ namespace LocationCleaned
             if(locName != "")
             {
                 //MessageBox.Show(locName);
-                InsertLocation(locName, map.Location.Longitude + ":" + map.Location.Latitude);
+                InsertLocation(locName, map.Location.Latitude + ":" + map.Location.Longitude);
                 ReadLocationFromDB();
                 map.ReadNameFromDB();
             }
@@ -426,7 +426,7 @@ namespace LocationCleaned
         private void label4_DoubleClick(object sender, EventArgs e)
         {
             PrintMessage($"❤ ❤ ❤ 哇哦居然被发现了 ❤ ❤ ❤");
-            PrintMessage($"https://github.com/quxiaozha/JocationPlus");
+            PrintMessage($"https://github.com/DoubleO31/JocationPlus");
             PrintMessage($"❤ ❤ ❤ 免费开源欢迎比心 ❤ ❤ ❤");
         }
     }

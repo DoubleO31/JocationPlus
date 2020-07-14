@@ -148,7 +148,7 @@ namespace LocationCleaned
             {
                 PrintMessage($"未找到 {shortVersion} 驱动版本,请前往下载驱动后重新加载设备 .");
                 System.Windows.Forms.MessageBox.Show($"未找到 {shortVersion} 驱动版本,请前往下载驱动后重新加载设备 .");
-                Process.Start("https://github.com/quxiaozha/JocationPlus/tree/master/drivers");
+                Process.Start("https://github.com/DoubleO31/JocationPlus/tree/master/drivers");
                 return;
             }
             Process.Start(new ProcessStartInfo
@@ -177,7 +177,7 @@ namespace LocationCleaned
             iDevice.idevice_set_debug_level(1);
 
             PrintMessage($"发起位置修改.");
-            PrintMessage($"经纬度: {location.Longitude},{location.Latitude}");
+            PrintMessage($"经纬度: {location.Latitude},{location.Longitude}");
 
             //location = bd09_To_Gcj02(location.Latitude, location.Longitude);
             //PrintMessage($"gcj02经度: {location.Longitude}");
@@ -354,15 +354,15 @@ namespace LocationCleaned
         {
 
         }
-        public Location(double lo, double la)
+        public Location(double la, double lo)
         {
             Longitude = lo; Latitude = la;
         }
         public Location(string location)
         {
             var arry = location.Split(',');
-            Longitude = double.Parse(arry[0]);
-            Latitude = double.Parse(arry[1]);
+            Longitude = double.Parse(arry[1]);
+            Latitude = double.Parse(arry[0]);
         }
         /// <summary>
         /// 经度
