@@ -176,8 +176,8 @@ namespace LocationCleaned
 
             iDevice.idevice_set_debug_level(1);
 
-            PrintMessage($"发起位置修改.");
-            PrintMessage($"经纬度: {location.Latitude},{location.Longitude}");
+            //PrintMessage($"发起位置修改.");
+            PrintMessage($"Current location is: {location.Latitude},{location.Longitude}");
 
             //location = bd09_To_Gcj02(location.Latitude, location.Longitude);
             //PrintMessage($"gcj02经度: {location.Longitude}");
@@ -194,7 +194,7 @@ namespace LocationCleaned
             Array.Reverse(size);
             Devices.ForEach(itm =>
             {
-                PrintMessage($"开始修改设备 {itm.Name} {itm.Version}");
+                //PrintMessage($"开始修改设备 {itm.Name} {itm.Version}");
 
                 var num = 0u;
                 iDevice.idevice_new(out var device, itm.UDID);

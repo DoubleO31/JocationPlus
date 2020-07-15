@@ -5,10 +5,10 @@
 
 **TODO list**:
 - [X] Edit current GPS format input and display to Lat/Lon
-- [] Convert current speed display to km/h
-- [] Add the option to choose between running or teleporting
-- [] Change current map to Google Map
-- [] Implement a way to read GPX file
+- [ ] Convert current speed display to km/h
+- [ ] Add the option to choose between running or teleporting
+- [ ] Change current map to Google Map
+- [ ] Implement a way to read GPX file
 
 #### To run: git clone then build the project using VS. Run the .exe file. 
 
@@ -24,5 +24,5 @@
 
 
 #### TIPS：
-- If encounter ``` An Lockdown error occurred. The error code was InvalidService.```errors，Please refer to [this](https://github.com/DoubleO31/JocationPlus/issues/2)
+- If encounter ``` An Lockdown error occurred. The error code was InvalidService.```errors，Please refer to [this](https://github.com/quxiaozha/JocationPlus/issues/2)
 

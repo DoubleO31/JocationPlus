@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
+using System.Device.Location;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -45,7 +46,7 @@ namespace LocationCleaned
         {
             //SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
             try
-            { 
+            {
                 //创建名为table1的数据表
                 map.locationDB.CreateTable("location", new string[] { "NAME", "POSITION" }, new string[] { "TEXT primary key", "TEXT" });
                 //locationDB.CloseConnection();
@@ -96,7 +97,7 @@ namespace LocationCleaned
                 while (reader.Read())
                 {
                     //读取NAME与POSITION                    
-                    txtLocation.Items.Add(reader.GetString(reader.GetOrdinal("NAME")) +"["+ reader.GetString(reader.GetOrdinal("POSITION"))+"]");
+                    txtLocation.Items.Add(reader.GetString(reader.GetOrdinal("NAME")) + "[" + reader.GetString(reader.GetOrdinal("POSITION")) + "]");
                 }
                 reader.Close();
                 //locationDB.CloseConnection();
@@ -128,18 +129,20 @@ namespace LocationCleaned
             //var location = new Location(txtLocationTest.Text);
             //service.UpdateLocation(location);
             string locStr = txtLocation.Text;
-            if (locStr.Contains("[")&locStr.Contains("]"))
+            if (locStr.Contains("[") & locStr.Contains("]"))
             {
                 int start = locStr.LastIndexOf("[");
                 int end = locStr.LastIndexOf("]");
-                locStr = locStr.Substring(start+1, end-start-1);
-            }else if (locStr.Contains(","))
+                locStr = locStr.Substring(start + 1, end - start - 1);
+            }
+            else if (locStr.Contains(","))
             {
                 locStr = locStr.Replace(",", ":");
             }
             string[] loc = locStr.Split(new char[] { ':' });
             if (loc.Length == 2)
             {
+                distanceCal(System.Convert.ToDouble(loc[0].Trim()), System.Convert.ToDouble(loc[1].Trim()));
                 map.Location.Longitude = System.Convert.ToDouble(loc[1].Trim());
                 map.Location.Latitude = System.Convert.ToDouble(loc[0].Trim());
                 service.UpdateLocation(map.Location);
@@ -148,7 +151,97 @@ namespace LocationCleaned
             {
                 PrintMessage($"The correct GPS format is：Lat:Lon or Lat:Lon.");
             }
-            
+
+        }
+
+        private void distanceCal(double lat, double lon)
+        {
+            var oldCoord = new GeoCoordinate(map.Location.Latitude, map.Location.Longitude);
+            var newCoord = new GeoCoordinate(lat, lon);
+            double distance = Math.Round(oldCoord.GetDistanceTo(newCoord) / 1000, 2);
+            PrintMessage($"The distance is {distance} km.");
+            switch (distance)
+            {
+                case double n when (n <= 2):
+                    PrintMessage($"The suggested cooldown time is 1 minute.");
+                    break;
+                case double n when (n <= 5):
+                    PrintMessage($"The suggested cooldown time is 2 minutes.");
+                    break;
+                case double n when (n <= 7):
+                    PrintMessage($"The suggested cooldown time is 5 minutes.");
+                    break;
+                case double n when (n <= 10):
+                    PrintMessage($"The suggested cooldown time is 7 minutes.");
+                    break;
+                case double n when (n <= 12):
+                    PrintMessage($"The suggested cooldown time is 8 minutes.");
+                    break;
+                case double n when (n <= 18):
+                    PrintMessage($"The suggested cooldown time is 10 minutes.");
+                    break;
+                case double n when (n <= 26):
+                    PrintMessage($"The suggested cooldown time is 15 minutes.");
+                    break;
+                case double n when (n <= 42):
+                    PrintMessage($"The suggested cooldown time is 19 minutes.");
+                    break;
+                case double n when (n <= 65):
+                    PrintMessage($"The suggested cooldown time is 22 minutes.");
+                    break;
+                case double n when (n <= 81):
+                    PrintMessage($"The suggested cooldown time is 25 minutes.");
+                    break;
+                case double n when (n <= 100):
+                    PrintMessage($"The suggested cooldown time is 35 minutes.");
+                    break;
+                case double n when (n <= 220):
+                    PrintMessage($"The suggested cooldown time is 40 minutes.");
+                    break;
+                case double n when (n <= 250):
+                    PrintMessage($"The suggested cooldown time is 45 minutes.");
+                    break;
+                case double n when (n <= 350):
+                    PrintMessage($"The suggested cooldown time is 51 minutes.");
+                    break;
+                case double n when (n <= 375):
+                    PrintMessage($"The suggested cooldown time is 54 minutes.");
+                    break;
+                case double n when (n <= 460):
+                    PrintMessage($"The suggested cooldown time is 62 minutes.");
+                    break;
+                case double n when (n <= 500):
+                    PrintMessage($"The suggested cooldown time is 65 minutes.");
+                    break;
+                case double n when (n <= 565):
+                    PrintMessage($"The suggested cooldown time is 69 minutes.");
+                    break;
+                case double n when (n <= 700):
+                    PrintMessage($"The suggested cooldown time is 78 minutes.");
+                    break;
+                case double n when (n <= 800):
+                    PrintMessage($"The suggested cooldown time is 84 minutes.");
+                    break;
+                case double n when (n <= 900):
+                    PrintMessage($"The suggested cooldown time is 92 minutes.");
+                    break;
+                case double n when (n <= 1000):
+                    PrintMessage($"The suggested cooldown time is 99 minutes.");
+                    break;
+                case double n when (n <= 1100):
+                    PrintMessage($"The suggested cooldown time is 107 minutes.");
+                    break;
+                case double n when (n <= 1200):
+                    PrintMessage($"The suggested cooldown time is 114 minutes.");
+                    break;
+                case double n when (n <= 1300):
+                    PrintMessage($"The suggested cooldown time is 117 minutes.");
+                    break;
+                case double n when (n > 1300):
+                    PrintMessage($"The suggested cooldown time is 120 minutes.");
+                    break;
+
+            }
         }
 
         public void PrintMessage(string msg)
@@ -177,7 +270,7 @@ namespace LocationCleaned
         //↑
         private void button5_Click(object sender, EventArgs e)
         {
-            
+
             PrintMessage($"向↑移动.");
             do
             {
@@ -198,7 +291,7 @@ namespace LocationCleaned
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
-            
+
         }
 
         //↓
@@ -211,7 +304,7 @@ namespace LocationCleaned
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
-            
+
         }
 
         //→
@@ -224,7 +317,7 @@ namespace LocationCleaned
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
-            
+
         }
 
         public static void Delay(int mm)
@@ -336,7 +429,7 @@ namespace LocationCleaned
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBox1.CheckState == CheckState.Checked)
+            if (checkBox1.CheckState == CheckState.Checked)
             {
                 PrintMessage("开启持续移动，关闭请取消勾选!");
                 keepMoving = true;
@@ -366,7 +459,7 @@ namespace LocationCleaned
         private void button7_Click(object sender, EventArgs e)
         {
             String locName = Interaction.InputBox("", "输入坐标别名", "", -1, -1);
-            if(locName != "")
+            if (locName != "")
             {
                 //MessageBox.Show(locName);
                 InsertLocation(locName, map.Location.Latitude + ":" + map.Location.Longitude);
@@ -428,6 +521,7 @@ namespace LocationCleaned
             PrintMessage($"❤ ❤ ❤ 哇哦居然被发现了 ❤ ❤ ❤");
             PrintMessage($"https://github.com/DoubleO31/JocationPlus");
             PrintMessage($"❤ ❤ ❤ 免费开源欢迎比心 ❤ ❤ ❤");
+            PrintMessage($"Current location is: {map.Location.Latitude},{map.Location.Longitude}");
         }
     }
 
