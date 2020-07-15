@@ -177,7 +177,7 @@ namespace LocationCleaned
             iDevice.idevice_set_debug_level(1);
 
             //PrintMessage($"发起位置修改.");
-            PrintMessage($"Current location is: {location.Latitude},{location.Longitude}");
+            PrintMessage($"Current location is: {Math.Round(location.Latitude, 5)},{Math.Round(location.Longitude, 5)}");
 
             //location = bd09_To_Gcj02(location.Latitude, location.Longitude);
             //PrintMessage($"gcj02经度: {location.Longitude}");
@@ -220,7 +220,7 @@ namespace LocationCleaned
 
                 //device.Dispose();
                 //client.Dispose();
-                PrintMessage($"设备 {itm.Name} {itm.Version} 修改完成.");
+                PrintMessage($"Device {itm.Name} {itm.Version} location editted.\n");
             });
         }
 
@@ -280,7 +280,7 @@ namespace LocationCleaned
             * Math.Sqrt(Math.Abs(x));
             ret += (20.0 * Math.Sin(6.0 * x * pi) + 20.0 * Math.Sin(2.0 * x * pi)) * 2.0 / 3.0;
             ret += (20.0 * Math.Sin(x * pi) + 40.0 * Math.Sin(x / 3.0 * pi)) * 2.0 / 3.0;
-            ret += (150.0 * Math.Sin(x / 12.0 * pi) + 300.0 * Math.Sin(x / 30.0* pi)) * 2.0 / 3.0;
+            ret += (150.0 * Math.Sin(x / 12.0 * pi) + 300.0 * Math.Sin(x / 30.0 * pi)) * 2.0 / 3.0;
             return ret;
         }
         // 函数功能：经纬度转换
@@ -323,7 +323,8 @@ namespace LocationCleaned
         }
 
         /** 火星坐标系或谷歌地图坐标 (GCJ-02)转换为WGS84（谷歌地球坐标） */
-        public static Location gcj_To_Gps84(double lat, double lon) {
+        public static Location gcj_To_Gps84(double lat, double lon)
+        {
             Location gps = transform(lat, lon);
             //double lontitude = lon * 2 - gps.Longitude;
             //double latitude = lat * 2 - gps.Latitude;

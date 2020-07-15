@@ -22,7 +22,8 @@ namespace LocationCleaned
     {
         frmMap map = new frmMap();
         LocationService service;
-        double speed = 0.0002;
+        double speed = 10.5;
+        double coordDiff = (10.5 * 1000 / 3600) / 111290.9197534;
         //public SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
         bool keepMoving = false;
 
@@ -274,7 +275,8 @@ namespace LocationCleaned
             PrintMessage($"向↑移动.");
             do
             {
-                map.Location.Latitude += speed;
+                //111290.9197534m
+                map.Location.Latitude += coordDiff;
                 //map.Location.Longitude += 0.0005;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
@@ -287,7 +289,7 @@ namespace LocationCleaned
             PrintMessage($"向←移动.");
             do
             {
-                map.Location.Longitude -= speed;
+                map.Location.Longitude -= coordDiff;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -300,7 +302,7 @@ namespace LocationCleaned
             PrintMessage($"向↓移动.");
             do
             {
-                map.Location.Latitude -= speed;
+                map.Location.Latitude -= coordDiff;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -313,7 +315,7 @@ namespace LocationCleaned
             PrintMessage($"向→移动.");
             do
             {
-                map.Location.Longitude += speed;
+                map.Location.Longitude += coordDiff;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -378,6 +380,7 @@ namespace LocationCleaned
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             speed = System.Convert.ToDouble(textBox1.Text);
+            coordDiff = (speed * 1000 / 3600) / 111290.9197534;
             PrintMessage($"速度修改为：{speed.ToString("0." + new string('#', 339))}");
         }
 
@@ -473,8 +476,8 @@ namespace LocationCleaned
             PrintMessage($"向↖移动.");
             do
             {
-                map.Location.Latitude += speed * Math.Sqrt(2) / 2;
-                map.Location.Longitude -= speed * Math.Sqrt(2) / 2;
+                map.Location.Latitude += coordDiff * Math.Sqrt(2) / 2;
+                map.Location.Longitude -= coordDiff * Math.Sqrt(2) / 2;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -485,8 +488,8 @@ namespace LocationCleaned
             PrintMessage($"向↗移动.");
             do
             {
-                map.Location.Latitude += speed * Math.Sqrt(2) / 2;
-                map.Location.Longitude += speed * Math.Sqrt(2) / 2;
+                map.Location.Latitude += coordDiff * Math.Sqrt(2) / 2;
+                map.Location.Longitude += coordDiff * Math.Sqrt(2) / 2;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -497,8 +500,8 @@ namespace LocationCleaned
             PrintMessage($"向↘移动.");
             do
             {
-                map.Location.Latitude -= speed * Math.Sqrt(2) / 2;
-                map.Location.Longitude += speed * Math.Sqrt(2) / 2;
+                map.Location.Latitude -= coordDiff * Math.Sqrt(2) / 2;
+                map.Location.Longitude += coordDiff * Math.Sqrt(2) / 2;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -509,8 +512,8 @@ namespace LocationCleaned
             PrintMessage($"向↙移动.");
             do
             {
-                map.Location.Latitude -= speed * Math.Sqrt(2) / 2;
-                map.Location.Longitude -= speed * Math.Sqrt(2) / 2;
+                map.Location.Latitude -= coordDiff * Math.Sqrt(2) / 2;
+                map.Location.Longitude -= coordDiff * Math.Sqrt(2) / 2;
                 service.UpdateLocation(map.Location);
                 Delay(1000);
             } while (keepMoving);
@@ -521,7 +524,12 @@ namespace LocationCleaned
             PrintMessage($"❤ ❤ ❤ 哇哦居然被发现了 ❤ ❤ ❤");
             PrintMessage($"https://github.com/DoubleO31/JocationPlus");
             PrintMessage($"❤ ❤ ❤ 免费开源欢迎比心 ❤ ❤ ❤");
-            PrintMessage($"Current location is: {map.Location.Latitude},{map.Location.Longitude}");
+            PrintMessage($"Current location is: {Math.Round(map.Location.Latitude, 2)},{Math.Round(map.Location.Longitude, 2)}");
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
