@@ -5,10 +5,12 @@ using System.Data;
 using System.Data.SQLite;
 using System.Device.Location;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using iMobileDevice;
 using iMobileDevice.iDevice;
 using iMobileDevice.Lockdown;
@@ -26,6 +28,7 @@ namespace LocationCleaned
         double coordDiff = (10.5 * 1000 / 3600) / 111290.9197534;
         //public SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
         bool keepMoving = false;
+        bool stopGPX = false;
 
         public frmMain()
         {
@@ -530,6 +533,67 @@ namespace LocationCleaned
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var fileContent = string.Empty;
+                var filePath = string.Empty;
+
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.InitialDirectory = "C:\\Users\\James\\Downloads";
+                    openFileDialog.Filter = "gpx files (*.gpx)|*.gpx";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        //Get the path of specified file
+                        filePath = openFileDialog.FileName;
+
+                        //Read the contents of the file into a stream
+                        // var fileStream = openFileDialog.OpenFile();
+
+                        // using (StreamReader reader = new StreamReader(fileStream))
+                        // {
+                        //     fileContent = reader.ReadToEnd();
+                        // }
+                    }
+                }
+                //PrintMessage($"{fileContent}");
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    foreach (XElement level1Element in XElement.Load(filePath).Elements("wpt"))
+                    {
+                        if (stopGPX) { break; }
+                        //PrintMessage($"{level1Element.Attribute("lat").Value},{level1Element.Attribute("lon").Value}");
+                        map.Location.Latitude = Convert.ToDouble(level1Element.Attribute("lat").Value);
+                        map.Location.Longitude = Convert.ToDouble(level1Element.Attribute("lon").Value);
+                        service.UpdateLocation(map.Location);
+                        Delay(3000);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintMessage($"Ahhhh something went wrong!{ex.StackTrace}");
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.CheckState == CheckState.Checked)
+            {
+                PrintMessage("GPX function stopped!");
+                stopGPX = true;
+            }
+            else
+            {
+                stopGPX = false;
+            }
         }
     }
 

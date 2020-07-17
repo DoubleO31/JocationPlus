@@ -32,6 +32,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.txtLocation = new System.Windows.Forms.ComboBox();
@@ -72,9 +75,9 @@
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.BackColor = System.Drawing.Color.LimeGreen;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(295, 55);
+            this.button2.Location = new System.Drawing.Point(360, 55);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(135, 25);
+            this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 1;
             this.button2.Text = "修改定位";
             this.button2.UseVisualStyleBackColor = false;
@@ -82,13 +85,16 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.button12);
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.btnReset);
             this.groupBox1.Controls.Add(this.txtLocation);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Location = new System.Drawing.Point(4, 8);
+            this.groupBox1.Location = new System.Drawing.Point(4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(441, 88);
             this.groupBox1.TabIndex = 2;
@@ -96,14 +102,50 @@
             this.groupBox1.Text = "位置操作";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.Control;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(197, 61);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "STOP:";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(240, 61);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(15, 14);
+            this.checkBox2.TabIndex = 12;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // button12
+            // 
+            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button12.BackColor = System.Drawing.Color.Gold;
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.Location = new System.Drawing.Point(145, 55);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(46, 25);
+            this.button12.TabIndex = 9;
+            this.button12.Text = "GPX";
+            this.button12.UseVisualStyleBackColor = false;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.BackColor = System.Drawing.Color.Gold;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(153, 55);
+            this.button7.Location = new System.Drawing.Point(260, 55);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(135, 25);
+            this.button7.Size = new System.Drawing.Size(93, 25);
             this.button7.TabIndex = 8;
             this.button7.Text = "保存当前坐标";
             this.button7.UseVisualStyleBackColor = false;
@@ -117,7 +159,7 @@
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.Location = new System.Drawing.Point(12, 55);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(135, 25);
+            this.btnReset.Size = new System.Drawing.Size(121, 25);
             this.btnReset.TabIndex = 7;
             this.btnReset.Text = "还原定位(暂不支持)";
             this.btnReset.UseVisualStyleBackColor = false;
@@ -424,6 +466,9 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button button12;
     }
 }
 
