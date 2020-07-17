@@ -32,8 +32,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button12 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
@@ -54,6 +52,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,8 +84,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.button13);
             this.groupBox1.Controls.Add(this.button12);
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.btnReset);
@@ -102,37 +100,14 @@
             this.groupBox1.Text = "位置操作";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.SystemColors.Control;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(197, 61);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 13);
-            this.label6.TabIndex = 20;
-            this.label6.Text = "STOP:";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(240, 61);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 12;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
             // button12
             // 
             this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button12.BackColor = System.Drawing.Color.Gold;
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(145, 55);
+            this.button12.Location = new System.Drawing.Point(133, 55);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(46, 25);
+            this.button12.Size = new System.Drawing.Size(59, 25);
             this.button12.TabIndex = 9;
             this.button12.Text = "GPX";
             this.button12.UseVisualStyleBackColor = false;
@@ -143,9 +118,9 @@
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.BackColor = System.Drawing.Color.Gold;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(260, 55);
+            this.button7.Location = new System.Drawing.Point(198, 55);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(93, 25);
+            this.button7.Size = new System.Drawing.Size(75, 25);
             this.button7.TabIndex = 8;
             this.button7.Text = "保存当前坐标";
             this.button7.UseVisualStyleBackColor = false;
@@ -157,7 +132,7 @@
             this.btnReset.BackColor = System.Drawing.Color.IndianRed;
             this.btnReset.Enabled = false;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.Location = new System.Drawing.Point(12, 55);
+            this.btnReset.Location = new System.Drawing.Point(6, 55);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(121, 25);
             this.btnReset.TabIndex = 7;
@@ -405,6 +380,19 @@
             this.label5.Text = "km/h";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // button13
+            // 
+            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button13.BackColor = System.Drawing.Color.Gold;
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Location = new System.Drawing.Point(279, 55);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 25);
+            this.button13.TabIndex = 10;
+            this.button13.Text = "Back";
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,9 +454,8 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button13;
     }
 }
 

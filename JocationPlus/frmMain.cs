@@ -28,7 +28,9 @@ namespace LocationCleaned
         double coordDiff = (10.5 * 1000 / 3600) / 111290.9197534;
         //public SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
         bool keepMoving = false;
-        bool stopGPX = false;
+        bool stopGPX = true;
+
+        Location lastLocation = new Location();
 
         public frmMain()
         {
@@ -122,10 +124,12 @@ namespace LocationCleaned
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Location temp = new Location(map.Location.Latitude, map.Location.Longitude);
             map.ShowDialog();
             txtLocation.Text = $"{map.Location.Latitude}:{map.Location.Longitude}";
             txtLocation.Items.Clear();
             ReadLocationFromDB();
+            map.Location = temp;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -146,7 +150,10 @@ namespace LocationCleaned
             string[] loc = locStr.Split(new char[] { ':' });
             if (loc.Length == 2)
             {
+                if (map.Location.Longitude == System.Convert.ToDouble(loc[1].Trim()) && map.Location.Latitude == System.Convert.ToDouble(loc[0].Trim())) { return; }
                 distanceCal(System.Convert.ToDouble(loc[0].Trim()), System.Convert.ToDouble(loc[1].Trim()));
+                lastLocation.Longitude = map.Location.Longitude;
+                lastLocation.Latitude = map.Location.Latitude;
                 map.Location.Longitude = System.Convert.ToDouble(loc[1].Trim());
                 map.Location.Latitude = System.Convert.ToDouble(loc[0].Trim());
                 service.UpdateLocation(map.Location);
@@ -539,6 +546,14 @@ namespace LocationCleaned
         {
             try
             {
+                //Press again to stop the GPX
+                if (!stopGPX)
+                {
+                    stopGPX = true;
+                    button12.Text = "GPX";
+                    return;
+                }
+
                 var fileContent = string.Empty;
                 var filePath = string.Empty;
 
@@ -566,14 +581,21 @@ namespace LocationCleaned
                 //PrintMessage($"{fileContent}");
                 if (!string.IsNullOrEmpty(filePath))
                 {
+                    stopGPX = false;
+                    button12.Text = "STOP";
+                    PrintMessage($"GPX execution has begun for file{filePath}!");
                     foreach (XElement level1Element in XElement.Load(filePath).Elements("wpt"))
                     {
-                        if (stopGPX) { break; }
                         //PrintMessage($"{level1Element.Attribute("lat").Value},{level1Element.Attribute("lon").Value}");
                         map.Location.Latitude = Convert.ToDouble(level1Element.Attribute("lat").Value);
                         map.Location.Longitude = Convert.ToDouble(level1Element.Attribute("lon").Value);
                         service.UpdateLocation(map.Location);
                         Delay(3000);
+                        if (stopGPX)
+                        {
+                            PrintMessage($"GPX execution has stopped!");
+                            break;
+                        }
                     }
                 }
             }
@@ -583,17 +605,14 @@ namespace LocationCleaned
             }
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void button13_Click(object sender, EventArgs e)
         {
-            if (checkBox2.CheckState == CheckState.Checked)
-            {
-                PrintMessage("GPX function stopped!");
-                stopGPX = true;
-            }
-            else
-            {
-                stopGPX = false;
-            }
+            if (lastLocation.Longitude == map.Location.Longitude && lastLocation.Latitude == map.Location.Latitude) { return; }
+            distanceCal(lastLocation.Latitude, lastLocation.Longitude);
+            map.Location.Longitude = lastLocation.Longitude;
+            map.Location.Latitude = lastLocation.Latitude;
+            service.UpdateLocation(map.Location);
+
         }
     }
 
