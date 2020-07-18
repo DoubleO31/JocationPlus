@@ -8,7 +8,7 @@
 - [X] Convert current speed display to km/h
 - [ ] Add the option to choose between running or teleporting
 - [ ] Change current map to Google Map
-- [ ] Implement a way to read GPX file
+- [X] Implement a way to read GPX file
 
 #### To run: git clone then build the project using VS. Run the .exe file. 
 
