@@ -583,26 +583,60 @@ namespace LocationCleaned
                 {
                     stopGPX = false;
                     button12.Text = "STOP";
-                    PrintMessage($"GPX execution has begun for file{filePath}!");
+                    PrintMessage($"GPX execution has begun for file {filePath}!");
+                    var locations = new List<Location>();
                     foreach (XElement level1Element in XElement.Load(filePath).Elements("wpt"))
                     {
-                        //PrintMessage($"{level1Element.Attribute("lat").Value},{level1Element.Attribute("lon").Value}");
-                        map.Location.Latitude = Convert.ToDouble(level1Element.Attribute("lat").Value);
-                        map.Location.Longitude = Convert.ToDouble(level1Element.Attribute("lon").Value);
-                        service.UpdateLocation(map.Location);
-                        Delay(3000);
-                        if (stopGPX)
-                        {
-                            PrintMessage($"GPX execution has stopped!");
-                            break;
-                        }
+                        locations.Add(new Location(Convert.ToDouble(level1Element.Attribute("lat").Value), Convert.ToDouble(level1Element.Attribute("lon").Value)));
                     }
+                    processGPX(locations);
                 }
             }
             catch (Exception ex)
             {
                 PrintMessage($"Ahhhh something went wrong!{ex.StackTrace}");
             }
+        }
+
+        private void processGPX(List<Location> locations)
+        {
+            PrintMessage($"GPX routing is starting in 10 seconds!");
+            Delay(10000);
+            map.Location = locations[0];
+            service.UpdateLocation(map.Location);
+            PrintMessage($"Reached {AddOrdinal(1)} coordinate!");
+            PrintMessage($"Waiting for 5 seconds.");
+            Delay(5000);
+            PrintMessage($"Moving to the next one!");
+            for (int i = 1; i < locations.Count; i++)
+            {
+                Location lastLoc = locations[i - 1];
+                Location nextLoc = locations[i];
+                var oldCoord = new GeoCoordinate(lastLoc.Latitude, lastLoc.Longitude);
+                var newCoord = new GeoCoordinate(nextLoc.Latitude, nextLoc.Longitude);
+                double distance = oldCoord.GetDistanceTo(newCoord);
+                double interval = Math.Ceiling(distance / (speed * 1000 / 3600));
+                double latDiff = (nextLoc.Latitude - lastLoc.Latitude) / interval;
+                double lonDiff = (nextLoc.Longitude - lastLoc.Longitude) / interval;
+                for (int n = 0; n < interval; n++)
+                {
+                    if (stopGPX)
+                    {
+                        PrintMessage($"GPX execution has stopped!");
+                        return;
+                    }
+                    map.Location.Latitude += latDiff;
+                    map.Location.Longitude += lonDiff;
+                    service.UpdateLocation(map.Location);
+                    Delay(1000);
+
+                }
+                PrintMessage($"Reached {AddOrdinal(i + 1)} coordinate!");
+                PrintMessage($"Waiting for 5 seconds.");
+                Delay(5000);
+                PrintMessage($"Moving to the next one!");
+            }
+
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -613,6 +647,31 @@ namespace LocationCleaned
             map.Location.Latitude = lastLocation.Latitude;
             service.UpdateLocation(map.Location);
 
+        }
+
+        private static string AddOrdinal(int num)
+        {
+            if (num <= 0) return num.ToString();
+
+            switch (num % 100)
+            {
+                case 11:
+                case 12:
+                case 13:
+                    return num + "th";
+            }
+
+            switch (num % 10)
+            {
+                case 1:
+                    return num + "st";
+                case 2:
+                    return num + "nd";
+                case 3:
+                    return num + "rd";
+                default:
+                    return num + "th";
+            }
         }
     }
 

@@ -220,7 +220,7 @@ namespace LocationCleaned
 
                 //device.Dispose();
                 //client.Dispose();
-                PrintMessage($"Device {itm.Name} {itm.Version} location editted.\n");
+                //PrintMessage($"Device {itm.Name} {itm.Version} location editted.\n");
             });
         }
 
