@@ -1,6 +1,6 @@
 # JocationPlus iOS GPS Location Mocking Editor
 
-#### Forked from quxiaozha(https://github.com/DoubleO31/JocationPlus). Thanks for the hardwork and keeping it open source :)
+#### Forked from quxiaozha(https://github.com/quxiaozha/JocationPlus). Thanks for the hardwork and keeping it open source. :)
 #### I'll add the latest driver, modify some functions, as well as develop new ones for my personal use.
 
 **TODO list**:
@@ -8,7 +8,7 @@
 - [X] Convert current speed display to km/h
 - [ ] Add the option to choose between running or teleporting
 - [ ] Change current map to Google Map
-- [ ] Implement a way to read GPX file
+- [X] Implement a way to read GPX file
 
 #### To run: git clone then build the project using VS. Run the .exe file. 
 
