@@ -559,7 +559,7 @@ namespace LocationCleaned
 
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.InitialDirectory = "C:\\Users\\James\\Downloads";
+                    openFileDialog.InitialDirectory = "C:\\";
                     openFileDialog.Filter = "gpx files (*.gpx)|*.gpx";
                     openFileDialog.FilterIndex = 2;
                     openFileDialog.RestoreDirectory = true;

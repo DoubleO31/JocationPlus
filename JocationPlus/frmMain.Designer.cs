@@ -32,6 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
@@ -52,7 +53,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button13 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +65,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 0;
-            this.button1.Text = "选择位置";
+            this.button1.Text = "Map";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -78,7 +78,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 1;
-            this.button2.Text = "修改定位";
+            this.button2.Text = "Mock";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -99,6 +99,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "位置操作";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // button13
+            // 
+            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button13.BackColor = System.Drawing.Color.Gold;
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Location = new System.Drawing.Point(279, 55);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 25);
+            this.button13.TabIndex = 10;
+            this.button13.Text = "Back";
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button12
             // 
@@ -122,7 +135,7 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 25);
             this.button7.TabIndex = 8;
-            this.button7.Text = "保存当前坐标";
+            this.button7.Text = "Save";
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
@@ -146,7 +159,7 @@
             this.txtLocation.Name = "txtLocation";
             this.txtLocation.Size = new System.Drawing.Size(307, 21);
             this.txtLocation.TabIndex = 6;
-            this.txtLocation.Text = "请选择或输入位置坐标";
+            this.txtLocation.Text = "Please enter your coordinate.";
             this.txtLocation.SelectedIndexChanged += new System.EventHandler(this.txtLocation_SelectedIndexChanged);
             this.txtLocation.TextChanged += new System.EventHandler(this.txtLocation_TextChanged_1);
             this.txtLocation.Click += new System.EventHandler(this.txtLocation_Click);
@@ -200,7 +213,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(381, 132);
+            this.checkBox1.Location = new System.Drawing.Point(391, 132);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(15, 14);
@@ -215,9 +228,9 @@
             this.label3.Location = new System.Drawing.Point(338, 132);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 12;
-            this.label3.Text = "匀速：";
+            this.label3.Text = "Walking:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // button11
@@ -379,19 +392,6 @@
             this.label5.TabIndex = 19;
             this.label5.Text = "km/h";
             this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // button13
-            // 
-            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button13.BackColor = System.Drawing.Color.Gold;
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Location = new System.Drawing.Point(279, 55);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 25);
-            this.button13.TabIndex = 10;
-            this.button13.Text = "Back";
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // frmMain
             // 
