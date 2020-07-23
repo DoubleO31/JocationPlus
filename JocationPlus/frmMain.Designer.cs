@@ -78,7 +78,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Mock";
+            this.button2.Text = "Teleport";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -180,6 +180,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbxLog.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbxLog.Location = new System.Drawing.Point(4, 95);
             this.rtbxLog.Name = "rtbxLog";
             this.rtbxLog.ReadOnly = true;

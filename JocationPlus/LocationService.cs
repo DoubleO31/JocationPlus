@@ -177,7 +177,6 @@ namespace LocationCleaned
             iDevice.idevice_set_debug_level(1);
 
             //PrintMessage($"发起位置修改.");
-            PrintMessage($"Current location is: {Math.Round(location.Latitude, 5)},{Math.Round(location.Longitude, 5)}");
 
             //location = bd09_To_Gcj02(location.Latitude, location.Longitude);
             //PrintMessage($"gcj02经度: {location.Longitude}");
@@ -220,7 +219,8 @@ namespace LocationCleaned
 
                 //device.Dispose();
                 //client.Dispose();
-                //PrintMessage($"Device {itm.Name} {itm.Version} location editted.\n");
+                //PrintMessage($"Device {itm.Name} {itm.Version} location editted.");
+                PrintMessage($"Current location: {Math.Round(location.Latitude, 5)},{Math.Round(location.Longitude, 5)}\n");
             });
         }
 

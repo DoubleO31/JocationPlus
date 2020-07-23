@@ -28,7 +28,9 @@ namespace LocationCleaned
         double coordDiff = (10.5 * 1000 / 3600) / 111290.9197534;
         //public SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
         bool keepMoving = false;
-        bool stopGPX = true;
+        bool movingInPorgress = false;
+        bool keepGPX = false;
+
 
         Location lastLocation = new Location();
 
@@ -150,106 +152,140 @@ namespace LocationCleaned
             string[] loc = locStr.Split(new char[] { ':' });
             if (loc.Length == 2)
             {
+                double newLat = System.Convert.ToDouble(loc[0].Trim());
+                double newLon = System.Convert.ToDouble(loc[1].Trim());
                 if (map.Location.Longitude == System.Convert.ToDouble(loc[1].Trim()) && map.Location.Latitude == System.Convert.ToDouble(loc[0].Trim())) { return; }
-                distanceCal(System.Convert.ToDouble(loc[0].Trim()), System.Convert.ToDouble(loc[1].Trim()));
-                lastLocation.Longitude = map.Location.Longitude;
-                lastLocation.Latitude = map.Location.Latitude;
-                map.Location.Longitude = System.Convert.ToDouble(loc[1].Trim());
-                map.Location.Latitude = System.Convert.ToDouble(loc[0].Trim());
-                service.UpdateLocation(map.Location);
+                if (!keepMoving)
+                {
+
+                    distanceCal(System.Convert.ToDouble(loc[0].Trim()), System.Convert.ToDouble(loc[1].Trim()), true);
+                    lastLocation.Longitude = map.Location.Longitude;
+                    lastLocation.Latitude = map.Location.Latitude;
+                    map.Location.Longitude = newLon;
+                    map.Location.Latitude = newLat;
+                    service.UpdateLocation(map.Location);
+                }
+                else
+                {
+                    if (map.Location.Latitude == 0 && map.Location.Longitude == 0)
+                    {
+                        PrintMessage($"Please teleport to a location first!");
+                        return;
+                    }
+                    PrintMessage($"Walking towards the coordinate!");
+                    distanceCal(newLat, newLon, false);
+                    lastLocation.Longitude = map.Location.Longitude;
+                    lastLocation.Latitude = map.Location.Latitude;
+
+                    processWalking(new Location(map.Location.Latitude, map.Location.Longitude),
+                     new Location(newLat, newLon), ref keepMoving, "Walking");
+                    if (keepMoving)
+                    {
+                        PrintMessage($"Reached the coordinate!");
+                        PrintMessage($"Walking execution has stopped!");
+                    }
+
+                }
             }
             else
             {
-                PrintMessage($"The correct GPS format is：Lat:Lon or Lat:Lon.");
+                PrintMessage($"The correct GPS format is：Lat,Lon or Lat:Lon.");
             }
 
         }
 
-        private void distanceCal(double lat, double lon)
+        private void distanceCal(double lat, double lon, bool teleport)
         {
             var oldCoord = new GeoCoordinate(map.Location.Latitude, map.Location.Longitude);
             var newCoord = new GeoCoordinate(lat, lon);
             double distance = Math.Round(oldCoord.GetDistanceTo(newCoord) / 1000, 2);
-            PrintMessage($"The distance is {distance} km.");
+
+            if (!teleport)
+            {
+                PrintMessage($"Distance: {distance} km. Walking time: { Math.Round(distance / speed * 3600, 0)}s");
+                return;
+            }
+            if (map.Location.Latitude == 0 && map.Location.Longitude == 0) { return; }
+            PrintMessage($"Distance: {distance} km.");
             switch (distance)
             {
                 case double n when (n <= 2):
-                    PrintMessage($"The suggested cooldown time is 1 minute.");
+                    PrintMessage($"Suggested cooldown: 1 minute.");
                     break;
                 case double n when (n <= 5):
-                    PrintMessage($"The suggested cooldown time is 2 minutes.");
+                    PrintMessage($"Suggested cooldown: 2 minutes.");
                     break;
                 case double n when (n <= 7):
-                    PrintMessage($"The suggested cooldown time is 5 minutes.");
+                    PrintMessage($"Suggested cooldown: 5 minutes.");
                     break;
                 case double n when (n <= 10):
-                    PrintMessage($"The suggested cooldown time is 7 minutes.");
+                    PrintMessage($"Suggested cooldown: 7 minutes.");
                     break;
                 case double n when (n <= 12):
-                    PrintMessage($"The suggested cooldown time is 8 minutes.");
+                    PrintMessage($"Suggested cooldown: 8 minutes.");
                     break;
                 case double n when (n <= 18):
-                    PrintMessage($"The suggested cooldown time is 10 minutes.");
+                    PrintMessage($"Suggested cooldown: 10 minutes.");
                     break;
                 case double n when (n <= 26):
-                    PrintMessage($"The suggested cooldown time is 15 minutes.");
+                    PrintMessage($"Suggested cooldown: 15 minutes.");
                     break;
                 case double n when (n <= 42):
-                    PrintMessage($"The suggested cooldown time is 19 minutes.");
+                    PrintMessage($"Suggested cooldown: 19 minutes.");
                     break;
                 case double n when (n <= 65):
-                    PrintMessage($"The suggested cooldown time is 22 minutes.");
+                    PrintMessage($"Suggested cooldown: 22 minutes.");
                     break;
                 case double n when (n <= 81):
-                    PrintMessage($"The suggested cooldown time is 25 minutes.");
+                    PrintMessage($"Suggested cooldown: 25 minutes.");
                     break;
                 case double n when (n <= 100):
-                    PrintMessage($"The suggested cooldown time is 35 minutes.");
+                    PrintMessage($"Suggested cooldown: 35 minutes.");
                     break;
                 case double n when (n <= 220):
-                    PrintMessage($"The suggested cooldown time is 40 minutes.");
+                    PrintMessage($"Suggested cooldown: 40 minutes.");
                     break;
                 case double n when (n <= 250):
-                    PrintMessage($"The suggested cooldown time is 45 minutes.");
+                    PrintMessage($"Suggested cooldown: 45 minutes.");
                     break;
                 case double n when (n <= 350):
-                    PrintMessage($"The suggested cooldown time is 51 minutes.");
+                    PrintMessage($"Suggested cooldown: 51 minutes.");
                     break;
                 case double n when (n <= 375):
-                    PrintMessage($"The suggested cooldown time is 54 minutes.");
+                    PrintMessage($"Suggested cooldown: 54 minutes.");
                     break;
                 case double n when (n <= 460):
-                    PrintMessage($"The suggested cooldown time is 62 minutes.");
+                    PrintMessage($"Suggested cooldown: 62 minutes.");
                     break;
                 case double n when (n <= 500):
-                    PrintMessage($"The suggested cooldown time is 65 minutes.");
+                    PrintMessage($"Suggested cooldown: 65 minutes.");
                     break;
                 case double n when (n <= 565):
-                    PrintMessage($"The suggested cooldown time is 69 minutes.");
+                    PrintMessage($"Suggested cooldown: 69 minutes.");
                     break;
                 case double n when (n <= 700):
-                    PrintMessage($"The suggested cooldown time is 78 minutes.");
+                    PrintMessage($"Suggested cooldown: 78 minutes.");
                     break;
                 case double n when (n <= 800):
-                    PrintMessage($"The suggested cooldown time is 84 minutes.");
+                    PrintMessage($"Suggested cooldown: 84 minutes.");
                     break;
                 case double n when (n <= 900):
-                    PrintMessage($"The suggested cooldown time is 92 minutes.");
+                    PrintMessage($"Suggested cooldown: 92 minutes.");
                     break;
                 case double n when (n <= 1000):
-                    PrintMessage($"The suggested cooldown time is 99 minutes.");
+                    PrintMessage($"Suggested cooldown: 99 minutes.");
                     break;
                 case double n when (n <= 1100):
-                    PrintMessage($"The suggested cooldown time is 107 minutes.");
+                    PrintMessage($"Suggested cooldown: 107 minutes.");
                     break;
                 case double n when (n <= 1200):
-                    PrintMessage($"The suggested cooldown time is 114 minutes.");
+                    PrintMessage($"Suggested cooldown: 114 minutes.");
                     break;
                 case double n when (n <= 1300):
-                    PrintMessage($"The suggested cooldown time is 117 minutes.");
+                    PrintMessage($"Suggested cooldown: 117 minutes.");
                     break;
                 case double n when (n > 1300):
-                    PrintMessage($"The suggested cooldown time is 120 minutes.");
+                    PrintMessage($"Suggested cooldown: 120 minutes.");
                     break;
 
             }
@@ -446,11 +482,13 @@ namespace LocationCleaned
             {
                 PrintMessage("开启持续移动，关闭请取消勾选!");
                 keepMoving = true;
+                button2.Text = "Walking";
             }
             else
             {
                 PrintMessage("已取消持续移动!");
                 keepMoving = false;
+                button2.Text = "Teleport";
             }
         }
 
@@ -547,9 +585,9 @@ namespace LocationCleaned
             try
             {
                 //Press again to stop the GPX
-                if (!stopGPX)
+                if (keepGPX)
                 {
-                    stopGPX = true;
+                    keepGPX = false;
                     button12.Text = "GPX";
                     return;
                 }
@@ -581,7 +619,7 @@ namespace LocationCleaned
                 //PrintMessage($"{fileContent}");
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    stopGPX = false;
+                    keepGPX = true;
                     button12.Text = "STOP";
                     PrintMessage($"GPX execution has begun for file {filePath}!");
                     var locations = new List<Location>();
@@ -604,37 +642,48 @@ namespace LocationCleaned
             Delay(10000);
             map.Location = locations[0];
             service.UpdateLocation(map.Location);
-            PrintMessage($"Reached {AddOrdinal(1)} coordinate!");
-            PrintMessage($"Waiting for 5 seconds.");
-            Delay(5000);
-            PrintMessage($"Moving to the next one!");
             for (int i = 1; i < locations.Count; i++)
             {
-                Location lastLoc = locations[i - 1];
-                Location nextLoc = locations[i];
-                var oldCoord = new GeoCoordinate(lastLoc.Latitude, lastLoc.Longitude);
-                var newCoord = new GeoCoordinate(nextLoc.Latitude, nextLoc.Longitude);
-                double distance = oldCoord.GetDistanceTo(newCoord);
-                double interval = Math.Ceiling(distance / (speed * 1000 / 3600));
-                double latDiff = (nextLoc.Latitude - lastLoc.Latitude) / interval;
-                double lonDiff = (nextLoc.Longitude - lastLoc.Longitude) / interval;
-                for (int n = 0; n < interval; n++)
-                {
-                    if (stopGPX)
-                    {
-                        PrintMessage($"GPX execution has stopped!");
-                        return;
-                    }
-                    map.Location.Latitude += latDiff;
-                    map.Location.Longitude += lonDiff;
-                    service.UpdateLocation(map.Location);
-                    Delay(1000);
-
-                }
-                PrintMessage($"Reached {AddOrdinal(i + 1)} coordinate!");
+                PrintMessage($"Reached {AddOrdinal(i)} coordinate!");
                 PrintMessage($"Waiting for 5 seconds.");
                 Delay(5000);
                 PrintMessage($"Moving to the next one!");
+                Location lastLoc = locations[i - 1];
+                Location nextLoc = locations[i];
+                processWalking(lastLoc, nextLoc, ref keepGPX, "GPX");
+                if (!keepGPX)
+                {
+                    return;
+                }
+
+            }
+            PrintMessage($"Reached the last coordinate!");
+            PrintMessage($"GPX execution has stopped!");
+            keepGPX = false;
+            button12.Text = "GPX";
+
+        }
+
+        private void processWalking(Location lastLoc, Location nextLoc, ref bool stop, string process)
+        {
+            var oldCoord = new GeoCoordinate(lastLoc.Latitude, lastLoc.Longitude);
+            var newCoord = new GeoCoordinate(nextLoc.Latitude, nextLoc.Longitude);
+            double distance = oldCoord.GetDistanceTo(newCoord);
+            double interval = Math.Ceiling(distance / (speed * 1000 / 3600));
+            double latDiff = (nextLoc.Latitude - lastLoc.Latitude) / interval;
+            double lonDiff = (nextLoc.Longitude - lastLoc.Longitude) / interval;
+            for (int n = 0; n < interval; n++)
+            {
+                if (!stop)
+                {
+                    PrintMessage($"{process} execution has stopped!");
+                    return;
+                }
+                map.Location.Latitude += latDiff;
+                map.Location.Longitude += lonDiff;
+                service.UpdateLocation(map.Location);
+                Delay(1000);
+
             }
 
         }
@@ -642,9 +691,10 @@ namespace LocationCleaned
         private void button13_Click(object sender, EventArgs e)
         {
             if (lastLocation.Longitude == map.Location.Longitude && lastLocation.Latitude == map.Location.Latitude) { return; }
-            distanceCal(lastLocation.Latitude, lastLocation.Longitude);
+            distanceCal(lastLocation.Latitude, lastLocation.Longitude, true);
             map.Location.Longitude = lastLocation.Longitude;
             map.Location.Latitude = lastLocation.Latitude;
+            PrintMessage($"Teleporting back to the last entered coordinate!");
             service.UpdateLocation(map.Location);
 
         }

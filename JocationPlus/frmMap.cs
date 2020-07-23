@@ -232,7 +232,7 @@ namespace LocationCleaned
         }
         public void position(string a_0, string a_1, string b_0)
         {
-            this.label3.Text = (double.Parse( a_1)).ToString();
+            this.label3.Text = (double.Parse(a_1)).ToString();
             this.label4.Text = (double.Parse(a_0)).ToString();
             this.label5.Text = b_0;
             this.textBox1.Text = b_0;
@@ -246,7 +246,7 @@ namespace LocationCleaned
             location = LocationService.gcj_To_Gps84(location.Latitude, location.Longitude);
             this.Location = location;
             Close();
-            
+
         }
         public void Alert(string msg)
         {
@@ -280,7 +280,7 @@ namespace LocationCleaned
 
         public void button2_Click_1(object sender, EventArgs e)
         {
-            if(this.textBox1.Text.Trim() != "" && this.label3.Text.Trim() != "" && this.label4.Text.Trim() != "")
+            if (this.textBox1.Text.Trim() != "" && this.label3.Text.Trim() != "" && this.label4.Text.Trim() != "")
             {
                 string name = this.textBox1.Text.Trim();
                 string position = this.label3.Text.Trim() + ":" + this.label4.Text.Trim();
@@ -292,7 +292,7 @@ namespace LocationCleaned
             {
                 MessageBox.Show("别名和经纬度不能为空哦!");
             }
-            
+
         }
 
         private void CreateLocationDB()
@@ -322,7 +322,7 @@ namespace LocationCleaned
             {
                 return "0";
             }
-            return Location.Latitude.ToString()=="0"?txtLocation.Latitude.ToString(): Location.Latitude.ToString();
+            return Location.Latitude.ToString() == "0" ? txtLocation.Latitude.ToString() : Location.Latitude.ToString();
         }
 
         public string GetLongitude()
@@ -376,7 +376,7 @@ namespace LocationCleaned
             {
                 //创建名为table1的数据表
                 //locationDB.CreateTable("location", new string[] { "NAME", "POSITION" }, new string[] { "TEXT primary key", "TEXT" });
-                locationDB.InsertValues("location", new string[] {name, position});
+                locationDB.InsertValues("location", new string[] { name, position });
                 //locationDB.CloseConnection();
             }
             catch (Exception ex)
@@ -395,7 +395,7 @@ namespace LocationCleaned
             //SqLiteHelper locationDB = new SqLiteHelper("locationDB.db");
             try
             {
-                locationDB.DeleteValuesAND("location", new string[] {"NAME"}, new string[] { name }, new string[] {"="});
+                locationDB.DeleteValuesAND("location", new string[] { "NAME" }, new string[] { name }, new string[] { "=" });
                 //locationDB.CloseConnection();
             }
             catch (Exception ex)

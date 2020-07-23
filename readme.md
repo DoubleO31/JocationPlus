@@ -4,9 +4,10 @@
 #### I'll add the latest driver, modify some functions, as well as develop new ones for my personal use.
 
 **TODO list**:
+- v2.0
 - [X] Edit current GPS format input and display to Lat/Lon
 - [X] Convert current speed display to km/h
-- [ ] Add the option to choose between running or teleporting
+- [X] Add the option to choose between walking or teleporting
 - [ ] Change current map to Google Map
 - [X] Implement a way to read GPX file
 
