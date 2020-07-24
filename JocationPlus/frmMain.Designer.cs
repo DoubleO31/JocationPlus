@@ -97,7 +97,6 @@
             this.groupBox1.Size = new System.Drawing.Size(441, 88);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "位置操作";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // button13
@@ -149,15 +148,15 @@
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(121, 25);
             this.btnReset.TabIndex = 7;
-            this.btnReset.Text = "还原定位(暂不支持)";
+            this.btnReset.Text = "Restore(N/A)";
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // txtLocation
             // 
-            this.txtLocation.Location = new System.Drawing.Point(47, 23);
+            this.txtLocation.Location = new System.Drawing.Point(75, 23);
             this.txtLocation.Name = "txtLocation";
-            this.txtLocation.Size = new System.Drawing.Size(307, 21);
+            this.txtLocation.Size = new System.Drawing.Size(279, 21);
             this.txtLocation.TabIndex = 6;
             this.txtLocation.Text = "Please enter your coordinate.";
             this.txtLocation.SelectedIndexChanged += new System.EventHandler(this.txtLocation_SelectedIndexChanged);
@@ -169,9 +168,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.Size = new System.Drawing.Size(61, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "坐标:";
+            this.label2.Text = "Coordinate:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // rtbxLog

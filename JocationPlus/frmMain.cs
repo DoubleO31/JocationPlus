@@ -40,7 +40,7 @@ namespace LocationCleaned
             InitializeComponent();
             ReadLocationFromDB();
             PrintMessage("https://github.com/DoubleO31/JocationPlus");
-            PrintMessage("开源软件，请勿用作非法用途^_^");
+            PrintMessage("This is an open source project. Please don't use it for any illegal activity.");
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
@@ -318,7 +318,7 @@ namespace LocationCleaned
         private void button5_Click(object sender, EventArgs e)
         {
 
-            PrintMessage($"向↑移动.");
+            PrintMessage($"Moving ↑.");
             do
             {
                 //111290.9197534m
@@ -332,7 +332,7 @@ namespace LocationCleaned
         // ←
         private void button3_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向←移动.");
+            PrintMessage($"Moving ←.");
             do
             {
                 map.Location.Longitude -= coordDiff;
@@ -345,7 +345,7 @@ namespace LocationCleaned
         //↓
         private void button4_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向↓移动.");
+            PrintMessage($"Moving ↓.");
             do
             {
                 map.Location.Latitude -= coordDiff;
@@ -358,7 +358,7 @@ namespace LocationCleaned
         //→
         private void button6_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向→移动.");
+            PrintMessage($"Moving →.");
             do
             {
                 map.Location.Longitude += coordDiff;
@@ -427,7 +427,7 @@ namespace LocationCleaned
         {
             speed = System.Convert.ToDouble(textBox1.Text);
             coordDiff = (speed * 1000 / 3600) / 111290.9197534;
-            PrintMessage($"速度修改为：{speed.ToString("0." + new string('#', 339))}");
+            PrintMessage($"Speed changed to：{speed.ToString("0." + new string('#', 339))}km/h");
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -480,13 +480,14 @@ namespace LocationCleaned
         {
             if (checkBox1.CheckState == CheckState.Checked)
             {
-                PrintMessage("开启持续移动，关闭请取消勾选!");
+                PrintMessage("Enabled continuous walking! Press any arrow key to start walking.");
+                PrintMessage("Uncheck to disable it.");
                 keepMoving = true;
                 button2.Text = "Walking";
             }
             else
             {
-                PrintMessage("已取消持续移动!");
+                PrintMessage("Disabled continuous walking!");
                 keepMoving = false;
                 button2.Text = "Teleport";
             }
@@ -509,7 +510,7 @@ namespace LocationCleaned
 
         private void button7_Click(object sender, EventArgs e)
         {
-            String locName = Interaction.InputBox("", "输入坐标别名", "", -1, -1);
+            String locName = Interaction.InputBox("", "Enter coordinate name", "", -1, -1);
             if (locName != "")
             {
                 //MessageBox.Show(locName);
@@ -521,7 +522,7 @@ namespace LocationCleaned
 
         private void button9_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向↖移动.");
+            PrintMessage($"Moving ↖.");
             do
             {
                 map.Location.Latitude += coordDiff * Math.Sqrt(2) / 2;
@@ -533,7 +534,7 @@ namespace LocationCleaned
 
         private void button8_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向↗移动.");
+            PrintMessage($"Moving ↗.");
             do
             {
                 map.Location.Latitude += coordDiff * Math.Sqrt(2) / 2;
@@ -545,7 +546,7 @@ namespace LocationCleaned
 
         private void button11_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向↘移动.");
+            PrintMessage($"Moving ↘.");
             do
             {
                 map.Location.Latitude -= coordDiff * Math.Sqrt(2) / 2;
@@ -557,7 +558,7 @@ namespace LocationCleaned
 
         private void button10_Click(object sender, EventArgs e)
         {
-            PrintMessage($"向↙移动.");
+            PrintMessage($"Moving ↙.");
             do
             {
                 map.Location.Latitude -= coordDiff * Math.Sqrt(2) / 2;
@@ -569,10 +570,10 @@ namespace LocationCleaned
 
         private void label4_DoubleClick(object sender, EventArgs e)
         {
-            PrintMessage($"❤ ❤ ❤ 哇哦居然被发现了 ❤ ❤ ❤");
+            PrintMessage($"❤ ❤ ❤ You found me! ❤ ❤ ❤");
             PrintMessage($"https://github.com/DoubleO31/JocationPlus");
-            PrintMessage($"❤ ❤ ❤ 免费开源欢迎比心 ❤ ❤ ❤");
-            PrintMessage($"Current location is: {Math.Round(map.Location.Latitude, 2)},{Math.Round(map.Location.Longitude, 2)}");
+            PrintMessage($"❤ ❤ ❤ Hope you like this app!❤ ❤ ❤");
+            PrintMessage($"Current location is: {Math.Round(map.Location.Latitude, 5)},{Math.Round(map.Location.Longitude, 5)}");
         }
 
         private void label5_Click(object sender, EventArgs e)

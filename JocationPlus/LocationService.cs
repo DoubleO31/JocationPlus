@@ -34,7 +34,7 @@ namespace LocationCleaned
             var deviceError = iDevice.idevice_get_device_list(out var devices, ref num);
             if (deviceError != iDeviceError.Success)
             {
-                PrintMessage("无法继续.可能本工具权限不足, 或者未正确安装iTunes工具.");
+                PrintMessage("Please install iTunes first!");
                 return;
             }
             ThreadPool.QueueUserWorkItem(o =>
@@ -79,7 +79,7 @@ namespace LocationCleaned
                                 Version = version
                             };
 
-                            PrintMessage($"发现设备: {deviceName}  {version}");
+                            PrintMessage($"Found device: {deviceName}  {version}");
                             LoadDevelopmentTool(device);
                             Devices.Add(device);
                         }
@@ -87,7 +87,7 @@ namespace LocationCleaned
                     }
                     else
                     {
-                        Devices.ForEach(itm => PrintMessage($"设备 {itm.Name} {itm.Version} 已断开连接."));
+                        Devices.ForEach(itm => PrintMessage($"Device {itm.Name} {itm.Version} disconnected."));
                         Devices.Clear();
                     }
                     Thread.Sleep(1000);
@@ -127,7 +127,7 @@ namespace LocationCleaned
                     Version = version
                 };
 
-                PrintMessage($"发现设备: {deviceName}  {version}  {udid}");
+                PrintMessage($"Found device: {deviceName}  {version}  {udid}");
                 LoadDevelopmentTool(device);
                 Devices.Add(device);
             }
@@ -140,14 +140,14 @@ namespace LocationCleaned
         public void LoadDevelopmentTool(DeviceModel device)
         {
             var shortVersion = string.Join(".", device.Version.Split('.').Take(2));
-            PrintMessage($"为设备 {device.Name} 加载驱动版本 {shortVersion} .");
+            PrintMessage($"Loading driver {shortVersion} for device {device.Name}.");
 
             var basePath = AppDomain.CurrentDomain.BaseDirectory + "/drivers/";
 
             if (!File.Exists($"{basePath}{shortVersion}/inject.dmg"))
             {
-                PrintMessage($"未找到 {shortVersion} 驱动版本,请前往下载驱动后重新加载设备 .");
-                System.Windows.Forms.MessageBox.Show($"未找到 {shortVersion} 驱动版本,请前往下载驱动后重新加载设备 .");
+                PrintMessage($"Could not find {shortVersion} drivers. Please download the corresponding driver and try again.");
+                System.Windows.Forms.MessageBox.Show($"Could not find {shortVersion} drivers. Please download the corresponding driver and try again.");
                 Process.Start("https://github.com/DoubleO31/JocationPlus/tree/master/drivers");
                 return;
             }
@@ -170,7 +170,7 @@ namespace LocationCleaned
         {
             if (Devices.Count == 0)
             {
-                PrintMessage($"修改失败! 未发现任何设备.");
+                PrintMessage($"Mock location failed. Could not find any devices!");
                 return;
             }
 
@@ -220,7 +220,7 @@ namespace LocationCleaned
                 //device.Dispose();
                 //client.Dispose();
                 //PrintMessage($"Device {itm.Name} {itm.Version} location editted.");
-                PrintMessage($"Current location: {Math.Round(location.Latitude, 5)},{Math.Round(location.Longitude, 5)}\n");
+                PrintMessage($"Current location: {Math.Round(location.Latitude, 4)},{Math.Round(location.Longitude, 4)}\n");
             });
         }
 
