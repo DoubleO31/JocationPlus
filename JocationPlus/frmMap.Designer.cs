@@ -45,10 +45,11 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.webView1 = new Microsoft.Toolkit.Forms.UI.Controls.WebView();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -116,11 +117,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(44, 18);
+            this.label3.Location = new System.Drawing.Point(52, 18);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 13);
+            this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "#";
             // 
             // label4
             // 
@@ -230,23 +230,24 @@
             this.textBox1.TabIndex = 9;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
-            // webBrowser1
+            // webView1
             // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 22);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(727, 581);
-            this.webBrowser1.TabIndex = 3;
-            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted_1);
+            this.webView1.IsPrivateNetworkClientServerCapabilityEnabled = true;
+            this.webView1.IsScriptNotifyAllowed = true;
+            this.webView1.Location = new System.Drawing.Point(-1, -1);
+            this.webView1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webView1.Name = "webView1";
+            this.webView1.Size = new System.Drawing.Size(729, 466);
+            this.webView1.TabIndex = 5;
+            this.webView1.ScriptNotify += new System.EventHandler<Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlScriptNotifyEventArgs>(this.webView1_ScriptNotify);
             // 
             // frmMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 581);
+            this.Controls.Add(this.webView1);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.webBrowser1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -257,6 +258,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,6 +281,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private Microsoft.Toolkit.Forms.UI.Controls.WebView webView1;
     }
 }
