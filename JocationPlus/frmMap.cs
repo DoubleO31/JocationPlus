@@ -24,6 +24,8 @@ namespace LocationCleaned
         public new Location Location { get; set; } = new Location();
         public SqLiteHelper locationDB { get; set; } = new SqLiteHelper("locationDB.db");
         public new Location txtLocation { get; set; } = new Location();
+        public bool UpdateLocation { get; set; } = false;
+
         public frmMap()
         {
             //this.locationDB = locationDB;
@@ -33,184 +35,8 @@ namespace LocationCleaned
         }
 
         private void frmMap_Load(object sender, EventArgs e)
-        {   Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            var google = @"<!DOCTYPE html>
-<html>
-  <head>
-    <title>Places Search Box</title>
-    <script src='https://polyfill.io/v3/polyfill.min.js?features=default'></script>
-    <script
-      src='https://maps.googleapis.com/maps/api/js?key="+ConfigurationManager.AppSettings.Get("GoogleMapAPIKey")+@"&callback=initAutocomplete&libraries=places&v=weekly'
-      defer
-    ></script>
-    <style type='text/css'>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
+        {
 
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        margin-top: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 400px;
-        Height: 20px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        padding: 6px 12px;
-      }
-
-      #target {
-        width: 345px;
-      }
-    </style>
-    <script>
-      'use strict';
-
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places'>
-      function initAutocomplete() {
-        var lat = "+GetLatitude()+@";
-        var lon = "+GetLongitude()+@";
-        if(lat == 0 && lon == 0){
-            lat = -33.8688;
-            lon = 151.2195;
-        }
-    const map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: lat,
-                lng: lon
-            },
-            zoom: 13,
-            mapTypeId: 'roadmap',
-            streetViewControl: false,
-            mapTypeControl: false
-        }); // Create the search box and link it to the UI element.
-
-        const input = document.getElementById('pac-input');
-        const searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // Bias the SearchBox results towards current map's viewport.
-
-        map.addListener('bounds_changed', () => {
-          searchBox.setBounds(map.getBounds());
-        });
-        
-        let markers = []; // Listen for the event fired when the user selects a prediction and retrieve
-        var myLatLon = {lat: lat, lng: lon};
-        markers.push(new google.maps.Marker({map, position: myLatLon}));
-        window.external.notify(myLatLon.lat+';'+myLatLon.lng+'; ');
-        
-        map.addListener('click', function(mapsMouseEvent) {
-          // Close the current InfoWindow.
-          markers.forEach(marker => {
-            marker.setMap(null);
-          });
-          markers = [];
-          
-          // Create a new InfoWindow.
-          markers.push(new google.maps.Marker({map, position: mapsMouseEvent.latLng}));
-          var coords = mapsMouseEvent.latLng.toString().slice(1,-1);
-          window.external.notify(coords.split(',')[0]+';'+coords.split(',')[1]+'; ');
-        });
-
-
-        searchBox.addListener('places_changed', () => {
-          const places = searchBox.getPlaces();
-
-          if (places.length == 0) {
-            return;
-          } // Clear out the old markers.
-
-          markers.forEach(marker => {
-            marker.setMap(null);
-          });
-          markers = []; // For each place, get the icon, name and location.
-
-          const bounds = new google.maps.LatLngBounds();
-          places.forEach(place => {
-            if (!place.geometry) {
-              console.log('Returned place contains no geometry');
-              return;
-            }
-            
-            markers.push(
-              new google.maps.Marker({
-                map,
-                title: place.name,
-                position: place.geometry.location
-              })
-            );
-            var coords = place.geometry.location.toString().slice(1,-1);
-            window.external.notify(coords.split(',')[0]+';'+coords.split(',')[1]+';'+place.formatted_address);
-            
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
-      }
-    </script>
-  </head>
-  <body>
-    <input
-      id='pac-input'
-      class='controls'
-      type='text'
-      placeholder='Search Box'
-    />
-    <div id='map'></div>
-  </body>
-</html>";
-            var test = @"<!DOCTYPE html>
-<html>
-<body>
-
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-
-</body>
-</html>";
-            //this.webView1.Refresh();
-            this.webView1.NavigateToString(google);
-            //this.webView1.Navigate("https://www.google.ca");
         }
         public void position(string a_0, string a_1, string b_0)
         {
@@ -226,8 +52,8 @@ namespace LocationCleaned
             double lat = double.Parse(label4.Text);
             //Location location = LocationService.bd09_To_Gcj02(lat, lon);
             //location = LocationService.gcj_To_Gps84(location.Latitude, location.Longitude);
-            this.Location = new Location(lat,lon);
-            Close();
+            this.Location = new Location(lat, lon);
+            Hide();
 
         }
         public void Alert(string msg)
@@ -432,6 +258,189 @@ namespace LocationCleaned
         {
             string coords = e.Value;
             position(coords.Split(';')[0], coords.Split(';')[1], coords.Split(';')[2]);
+        }
+
+        private void frmMap_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                UpdateLocation = false;
+                Hide();
+            }
+        }
+
+        private void frmMap_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                var google = @"<!DOCTYPE html>
+<html>
+  <head>
+    <title>Places Search Box</title>
+    <script src='https://polyfill.io/v3/polyfill.min.js?features=default'></script>
+    <script
+      src='https://maps.googleapis.com/maps/api/js?key=" + ConfigurationManager.AppSettings.Get("GoogleMapAPIKey") + @"&callback=initAutocomplete&libraries=places&v=weekly'
+      defer
+    ></script>
+    <style type='text/css'>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        margin-top: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+        Height: 20px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+
+      #target {
+        width: 345px;
+      }
+    </style>
+    <script>
+      'use strict';
+
+      // This example adds a search box to a map, using the Google Place Autocomplete
+      // feature. People can enter geographical searches. The search box will return a
+      // pick list containing a mix of places and predicted search terms.
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places'>
+      function initAutocomplete() {
+        var lat = " + GetLatitude() + @";
+        var lon = " + GetLongitude() + @";
+        if(lat == 0 && lon == 0){
+            lat = -33.8688;
+            lon = 151.2195;
+        }
+    const map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: lat,
+                lng: lon
+            },
+            zoom: 13,
+            mapTypeId: 'roadmap',
+            streetViewControl: false,
+            mapTypeControl: false
+        }); // Create the search box and link it to the UI element.
+
+        const input = document.getElementById('pac-input');
+        const searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // Bias the SearchBox results towards current map's viewport.
+
+        map.addListener('bounds_changed', () => {
+          searchBox.setBounds(map.getBounds());
+        });
+        
+        let markers = []; // Listen for the event fired when the user selects a prediction and retrieve
+        var myLatLon = {lat: lat, lng: lon};
+        markers.push(new google.maps.Marker({map, position: myLatLon}));
+        window.external.notify(myLatLon.lat+';'+myLatLon.lng+'; ');
+        
+        map.addListener('click', function(mapsMouseEvent) {
+          // Close the current InfoWindow.
+          markers.forEach(marker => {
+            marker.setMap(null);
+          });
+          markers = [];
+          
+          // Create a new InfoWindow.
+          markers.push(new google.maps.Marker({map, position: mapsMouseEvent.latLng}));
+          var coords = mapsMouseEvent.latLng.toString().slice(1,-1);
+          window.external.notify(coords.split(',')[0]+';'+coords.split(',')[1]+'; ');
+        });
+
+
+        searchBox.addListener('places_changed', () => {
+          const places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          } // Clear out the old markers.
+
+          markers.forEach(marker => {
+            marker.setMap(null);
+          });
+          markers = []; // For each place, get the icon, name and location.
+
+          const bounds = new google.maps.LatLngBounds();
+          places.forEach(place => {
+            if (!place.geometry) {
+              console.log('Returned place contains no geometry');
+              return;
+            }
+            
+            markers.push(
+              new google.maps.Marker({
+                map,
+                title: place.name,
+                position: place.geometry.location
+              })
+            );
+            var coords = place.geometry.location.toString().slice(1,-1);
+            window.external.notify(coords.split(',')[0]+';'+coords.split(',')[1]+';'+place.formatted_address);
+            
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <input
+      id='pac-input'
+      class='controls'
+      type='text'
+      placeholder='Search Box'
+    />
+    <div id='map'></div>
+  </body>
+</html>";
+                this.webView1.NavigateToString(google);
+            }
         }
     }
 }

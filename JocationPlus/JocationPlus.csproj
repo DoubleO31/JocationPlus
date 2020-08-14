@@ -88,7 +88,7 @@
       <HintPath>..\packages\iMobileDevice-net.1.2.77\lib\net45\iMobileDevice-net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <PackageReference Include="Microsoft.Toolkit.Forms.UI.Controls.WebView" Version="6.1.1" />
+    <PackageReference Include="Microsoft.Toolkit.Forms.UI.Controls.WebView" Version="6.1.2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />

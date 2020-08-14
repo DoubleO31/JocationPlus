@@ -234,7 +234,7 @@
             // 
             this.webView1.IsPrivateNetworkClientServerCapabilityEnabled = true;
             this.webView1.IsScriptNotifyAllowed = true;
-            this.webView1.Location = new System.Drawing.Point(-1, -1);
+            this.webView1.Location = new System.Drawing.Point(3, -1);
             this.webView1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webView1.Name = "webView1";
             this.webView1.Size = new System.Drawing.Size(729, 466);
@@ -252,7 +252,9 @@
             this.Name = "frmMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Map";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMap_FormClosing);
             this.Load += new System.EventHandler(this.frmMap_Load);
+            this.VisibleChanged += new System.EventHandler(this.frmMap_VisibleChanged);
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

@@ -128,7 +128,7 @@ namespace LocationCleaned
         private void button1_Click(object sender, EventArgs e)
         {
             Location temp = new Location(map.Location.Latitude, map.Location.Longitude);
-            map.ShowDialog();
+            map.Show();
             txtLocation.Text = $"{map.Location.Latitude}:{map.Location.Longitude}";
             txtLocation.Items.Clear();
             ReadLocationFromDB();
