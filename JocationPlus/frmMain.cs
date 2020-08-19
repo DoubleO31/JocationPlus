@@ -23,7 +23,7 @@ namespace LocationCleaned
 {
     public partial class frmMain : Form
     {
-        frmMap map = new frmMap();
+        frmMap map;
         LocationService service;
         double speed = 10.5;
         double coordDiff = (10.5 * 1000 / 3600) / 111290.9197534;
@@ -37,6 +37,7 @@ namespace LocationCleaned
 
         public frmMain()
         {
+            map = new frmMap(this);
             CreateLocationDB();
             InitializeComponent();
             ReadLocationFromDB();
@@ -127,12 +128,20 @@ namespace LocationCleaned
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Location temp = new Location(map.Location.Latitude, map.Location.Longitude);
             map.Show();
-            txtLocation.Text = $"{map.Location.Latitude}:{map.Location.Longitude}";
+
+
+        }
+
+        public void update_txtLocation()
+        {
+            txtLocation.Text = $"{map.txtLocation.Latitude}:{map.txtLocation.Longitude}";
+        }
+
+        public void update_dataBase()
+        {
             txtLocation.Items.Clear();
             ReadLocationFromDB();
-            map.Location = temp;
         }
 
         private void button2_Click(object sender, EventArgs e)

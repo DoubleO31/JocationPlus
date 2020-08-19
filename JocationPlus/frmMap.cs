@@ -24,14 +24,15 @@ namespace LocationCleaned
         public new Location Location { get; set; } = new Location();
         public SqLiteHelper locationDB { get; set; } = new SqLiteHelper("locationDB.db");
         public new Location txtLocation { get; set; } = new Location();
-        public bool UpdateLocation { get; set; } = false;
+        private frmMain mainForm;
 
-        public frmMap()
+        public frmMap(frmMain mainForm)
         {
             //this.locationDB = locationDB;
             CreateLocationDB();
             InitializeComponent();
             ReadNameFromDB();
+            this.mainForm = mainForm;
         }
 
         private void frmMap_Load(object sender, EventArgs e)
@@ -52,7 +53,8 @@ namespace LocationCleaned
             double lat = double.Parse(label4.Text);
             //Location location = LocationService.bd09_To_Gcj02(lat, lon);
             //location = LocationService.gcj_To_Gps84(location.Latitude, location.Longitude);
-            this.Location = new Location(lat, lon);
+            this.txtLocation = new Location(lat, lon);
+            mainForm.update_txtLocation();
             Hide();
 
         }
@@ -95,6 +97,7 @@ namespace LocationCleaned
                 //MessageBox.Show(name+"\n"+position);
                 this.InsertLocation(name, position);
                 this.ReadNameFromDB();
+                mainForm.update_dataBase();
             }
             else
             {
@@ -262,12 +265,9 @@ namespace LocationCleaned
 
         private void frmMap_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                UpdateLocation = false;
-                Hide();
-            }
+            e.Cancel = true;
+            Hide();
+
         }
 
         private void frmMap_VisibleChanged(object sender, EventArgs e)
