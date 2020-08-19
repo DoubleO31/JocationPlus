@@ -8,7 +8,7 @@
 - [X] Edit current GPS format input and display to Lat/Lon
 - [X] Convert current speed display to km/h
 - [X] Add the option to choose between walking or teleporting
-- [ ] Change current map to Google Map
+- [X] Change current map to Google Map
 - [X] Implement a way to read GPX file
 
 #### To run: git clone then build the project using VS. Run the .exe file. 
